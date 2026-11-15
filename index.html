@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e6e6ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>AgentPulse – KI-Agenten-Cockpit (Demo)</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="prog" id="prog"></div>
+
+<!-- =========================== KOPFZEILE =========================== -->
+<header class="top">
+  <a class="brand" href="#cockpit">
+    <span class="logo" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12.5h4l2.5-6 5 12 2.5-6h4"/></svg></span>
+    <span style="min-width:0"><b id="brandName">AgentPulse</b><span id="brandSub">Kundenservice · Muster Handels GmbH</span></span>
+  </a>
+  <div class="top-actions">
+    <span class="demo-badge hide-m">Demo-Daten</span>
+    <button class="live-btn" id="liveBtn" aria-label="Live-Simulation pausieren oder fortsetzen"><span class="live-dot"></span><span class="lt">Live</span></button>
+    <button class="btn primary hide-m" id="tourBtn">Geführte Tour</button>
+    <button class="icon-btn" id="themeBtn" aria-label="Hell- oder Dunkelmodus"></button>
+  </div>
+</header>
+
+<div class="shell">
+  <!-- ===================== SEITENLEISTE (Desktop) ===================== -->
+  <nav class="side" aria-label="Hauptnavigation">
+    <span class="sec">Überblick</span>
+    <a href="#cockpit" data-view="cockpit"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Cockpit<span class="cnt" data-alertcnt>3</span></a>
+    <a href="#live" data-view="live"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>Live-Tickets</a>
+    <span class="sec">Messung</span>
+    <a href="#technik" data-view="technik"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 17a9 9 0 1 1 17 0"/><path d="M12 14l4-4"/></svg>Technische KPIs</a>
+    <a href="#geschaeft" data-view="geschaeft"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Geschäft &amp; ROI</a>
+    <span class="sec">Steuerung</span>
+    <a href="#verbindungen" data-view="verbindungen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v5M15 2v5M6 7h12v4a6 6 0 0 1-12 0z"/><path d="M12 17v5"/></svg>Verbindungen<span class="cnt" data-conncnt>0/4</span></a>
+    <a href="#agenten" data-view="agenten"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="4"/><path d="M12 4v4"/><path d="M9 14h.01M15 14h.01"/></svg>Agenten</a>
+    <a href="#leitplanken" data-view="leitplanken"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Leitplanken &amp; Audit</a>
+    <div class="side-note"><b>Simulation</b> – diese Demo enthält keine echten KI-Agenten und ruft keine externen APIs auf.<br><br>Geplanter Stack: LangGraph · FastAPI · Langfuse · OpenTelemetry · Postgres</div>
+  </nav>
+
+  <!-- ===================== INHALT (wird von js/app.js gefüllt) ===================== -->
+  <main id="main"></main>
+</div>
+
+<!-- ===================== TAB-LEISTE UNTEN (Handy) ===================== -->
+<nav class="tabbar" aria-label="Navigation">
+  <a href="#cockpit" data-view="cockpit"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Cockpit<span class="dotc" data-alertcnt>3</span></a>
+  <a href="#live" data-view="live"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>Live</a>
+  <a href="#verbindungen" data-view="verbindungen"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v5M15 2v5M6 7h12v4a6 6 0 0 1-12 0z"/><path d="M12 17v5"/></svg>Verbinden</a>
+  <a href="#technik" data-view="technik"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 17a9 9 0 1 1 17 0"/><path d="M12 14l4-4"/></svg>KPIs</a>
+  <button id="moreBtn" data-more><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Mehr</button>
+</nav>
+
+<!-- ===================== DETAIL-FENSTER / BOTTOM-SHEET ===================== -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="handle" aria-hidden="true"></div>
+  <div class="drawer-head"><div id="dTitle" style="min-width:0"></div><button class="x" id="dClose" aria-label="Schließen">×</button></div>
+  <div class="drawer-body" id="dBody"></div>
+</aside>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
